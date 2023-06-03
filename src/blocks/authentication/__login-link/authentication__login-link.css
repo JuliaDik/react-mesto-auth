@@ -1,0 +1,9 @@
+.authentication__login-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.authentication__login-link:hover {
+  opacity: 0.6;
+}

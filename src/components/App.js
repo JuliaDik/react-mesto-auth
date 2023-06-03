@@ -8,6 +8,10 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import Register from "./Register";
+import Login from "./Login";
+import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -18,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [userEmail, setUserEmail] = React.useState("email@email.com");
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
@@ -113,35 +118,37 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header userEmail={userEmail}/>
 
         <Routes>
           <Route
             path='/'
             element={
-              <>
-                <Main
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleCardDelete}
-                  cards={cards}
-                />
-                <Footer />
-              </>
+              <ProtectedRoute element={
+                <>
+                  <Main
+                    onEditAvatar={handleEditAvatarClick}
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                    cards={cards}
+                  />
+                  <Footer />
+                </>
+              }/>
             }
           />
 
           <Route
             path='/sign-up'
-            element={}
+            element={<Register />}
           />
 
-          <Routes
+          <Route
             path='/sign-in'
-            element={}
+            element={<Login />}
           />
         </Routes>
 
@@ -171,6 +178,7 @@ function App() {
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <InfoTooltip name="info" />
       </CurrentUserContext.Provider>
     </div>
   );
