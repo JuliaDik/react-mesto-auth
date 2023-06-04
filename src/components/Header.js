@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.svg";
 
@@ -20,7 +19,7 @@ function Header(props) {
           element={
             <>
               <p className="header__email">{props.userEmail}</p>
-              <Link className="header__link header__link_type_exit" to="/sign-in">
+              <Link className="header__link header__link_type_exit" onClick={props.onSignOut}>
                 Выйти
               </Link>
             </>
