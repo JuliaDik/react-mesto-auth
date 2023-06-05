@@ -3,21 +3,21 @@ import { useState } from "react";
 function Login(props) {
   const [formValue, setFormValue] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   function handleChange(evt) {
-    const {name, value} = evt.target;
+    const { name, value } = evt.target;
 
     setFormValue({
       ...formValue,
-      [name]: value
+      [name]: value,
     });
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onAuthorize(formValue.email, formValue.password);
+    props.onLogin(formValue.email, formValue.password);
   }
 
   return (
@@ -34,7 +34,7 @@ function Login(props) {
           type="email"
           name="email"
           id="email-input"
-          placeholder="Email" 
+          placeholder="Email"
           value={formValue.email}
           onChange={handleChange}
         ></input>

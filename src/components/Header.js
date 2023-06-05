@@ -8,18 +8,29 @@ function Header(props) {
       <Routes>
         <Route
           path="/sign-in"
-          element={<Link className="header__link" to="/sign-up">Регистрация</Link>}
+          element={
+            <Link className="header__link" to="/sign-up">
+              Регистрация
+            </Link>
+          }
         />
         <Route
           path="/sign-up"
-          element={<Link className="header__link" to="/sign-in">Войти</Link>}
+          element={
+            <Link className="header__link" to="/sign-in">
+              Войти
+            </Link>
+          }
         />
-        <Route exact
+        <Route
           path="/"
           element={
             <>
-              <p className="header__email">{props.userEmail}</p>
-              <Link className="header__link header__link_type_exit" onClick={props.onSignOut}>
+              <p className="header__email">{props.currentUserEmail}</p>
+              <Link
+                className="header__link header__link_type_exit"
+                onClick={props.onLogout}
+              >
                 Выйти
               </Link>
             </>

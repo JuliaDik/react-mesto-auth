@@ -17,28 +17,36 @@ import auth from "../utils/Auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  // аутентификация
+  const [isSucceeded, setIsSucceeded] = useState(false);
+  // авторизация
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // попапы
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  // пользователь
   const [currentUser, setCurrentUser] = useState({});
+  const [currentUserEmail, setCurrentUserEmail] = useState("");
+  // карточки
+  const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn) {
+    if (isLoggedIn) {
       Promise.all([api.getUserInfo(), api.getCards()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     }
-  }, [loggedIn]);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -47,9 +55,11 @@ function App() {
         .checkToken(jwt)
         .then((res) => {
           if (res) {
-            setLoggedIn(true);
-            setUserEmail(res.data.email);
-            // перенаправляем в профиль
+            // при повторном визите на сайт
+            // пользователь не должен вновь авторизовываться
+            setIsLoggedIn(true);
+            setCurrentUserEmail(res.data.email);
+            // сразу перенаправляется в пользовательский профиль
             navigate("/", { replace: true });
           }
         })
@@ -58,6 +68,51 @@ function App() {
         });
     }
   }, []);
+
+  function handleRegister(email, password) {
+    auth
+      .register(email, password)
+      .then((res) => {
+        if (res) {
+          setIsInfoTooltipOpen(true);
+          setIsSucceeded(true);
+          // перенаправляем на авторизацию (вход в систему)
+          navigate("/sign-in", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setIsSucceeded(false);
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  function handleLogin(email, password) {
+    auth
+      .login(email, password)
+      .then((res) => {
+        if (res) {
+          // сохраняем токен
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          // перенаправляем в пользовательский профиль
+          navigate("/", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setIsSucceeded(false);
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  function handleLogout() {
+    // удаляем токен
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    // перенаправляем на авторизацию (вход в систему)
+    navigate("/sign-in", { replace: true });
+  }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -79,6 +134,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsInfoTooltipOpen(false);
     setSelectedCard(null);
   }
 
@@ -99,6 +155,18 @@ function App() {
       .patchAvatar({ avatar })
       .then((userData) => {
         setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  function handleAddPlaceSubmit({ name, link }) {
+    api
+      .postCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -132,74 +200,20 @@ function App() {
       });
   }
 
-  function handleAddPlaceSubmit({ name, link }) {
-    api
-      .postCard({ name, link })
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }
-
-  function handleRegister(email, password) {
-    auth
-      .register(email, password)
-      .then((res) => {
-        if (res) {
-          // перенаправляем на авторизацию (вход в систему)
-          navigate("/sign-in", { replace: true });
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }
-
-  function handleAuthorize(email, password) {
-    auth
-      .authorize(email, password)
-      .then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          localStorage.setItem("jwt", res.token);
-          // перенаправляем в профиль
-          navigate("/", { replace: true });
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }
-
-  function handleSignOut() {
-    setLoggedIn(false);
-    localStorage.removeItem("jwt");
-    navigate("/sign-in", { replace: true });
-  }
-
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header
-          userEmail={userEmail}
-          onSignOut={handleSignOut}
-        />
+        <Header currentUserEmail={currentUserEmail} onLogout={handleLogout} />
         <Routes>
           <Route
             path="/sign-up"
             element={<Register onRegister={handleRegister} />}
           />
-          <Route
-            path="/sign-in"
-            element={<Login onAuthorize={handleAuthorize} />}
-          />
+          <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/"
             element={
-              <ProtectedRoute loggedIn={loggedIn}>
+              <ProtectedRoute loggedIn={isLoggedIn}>
                 <>
                   <Main
                     onEditAvatar={handleEditAvatarClick}
@@ -237,12 +251,12 @@ function App() {
           buttonText="Да"
           onClose={closeAllPopups}
         />
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-        />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
           name="info"
+          isSucceeded={isSucceeded}
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
         />
       </CurrentUserContext.Provider>
     </div>

@@ -1,5 +1,5 @@
 import successIcon from "../images/succes-icon.svg";
-// import failIcon from '../images/fail-icon.svg';
+import failIcon from "../images/fail-icon.svg";
 
 function InfoTooltip(props) {
   return (
@@ -15,8 +15,16 @@ function InfoTooltip(props) {
           aria-label="кнопка-закрыть"
           onClick={props.onClose}
         ></button>
-        <img className="popup__info-image" src={successIcon} alt="" />
-        <p className="popup__message">Вы успешно зарегистрировались!</p>
+        <img
+          className="popup__info-image"
+          src={props.isSucceeded ? successIcon : failIcon}
+          alt={props.isSucceeded ? "Успешно" : "Ошибка"}
+        />
+        <p className="popup__message">
+          {props.isSucceeded
+            ? "Вы успешно зарегистрировались!"
+            : "Что-то пошло не так! Попробуйте еще раз."}
+        </p>
       </div>
     </div>
   );
