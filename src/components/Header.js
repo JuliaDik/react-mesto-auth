@@ -7,22 +7,7 @@ function Header(props) {
       <img className="header__logo" src={logo} alt="Логотип Mesto" />
       <Routes>
         <Route
-          path="/sign-in"
-          element={
-            <Link className="header__link" to="/sign-up">
-              Регистрация
-            </Link>
-          }
-        />
-        <Route
-          path="/sign-up"
-          element={
-            <Link className="header__link" to="/sign-in">
-              Войти
-            </Link>
-          }
-        />
-        <Route
+          exact
           path="/"
           element={
             <>
@@ -34,6 +19,24 @@ function Header(props) {
                 Выйти
               </Link>
             </>
+          }
+        />
+        <Route
+          exact
+          path="/sign-in"
+          element={
+            <Link className="header__link" to="/sign-up">
+              Регистрация
+            </Link>
+          }
+        />
+        <Route
+          exact
+          path="/sign-up"
+          element={
+            <Link className="header__link" to="/sign-in">
+              Войти
+            </Link>
           }
         />
       </Routes>

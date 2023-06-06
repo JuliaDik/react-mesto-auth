@@ -203,14 +203,13 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header currentUserEmail={currentUserEmail} onLogout={handleLogout} />
+        <Header
+          currentUserEmail={currentUserEmail}
+          onLogout={handleLogout}
+        />
         <Routes>
           <Route
-            path="/sign-up"
-            element={<Register onRegister={handleRegister} />}
-          />
-          <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
-          <Route
+            exact
             path="/"
             element={
               <ProtectedRoute loggedIn={isLoggedIn}>
@@ -228,6 +227,16 @@ function App() {
                 </>
               </ProtectedRoute>
             }
+          />
+          <Route
+            exact
+            path="/sign-up"
+            element={<Register onRegister={handleRegister} />}
+          />
+          <Route
+            exact
+            path="/sign-in"
+            element={<Login onLogin={handleLogin} />}
           />
         </Routes>
         <EditAvatarPopup
@@ -251,7 +260,10 @@ function App() {
           buttonText="Да"
           onClose={closeAllPopups}
         />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup 
+          card={selectedCard}
+          onClose={closeAllPopups}
+        />
         <InfoTooltip
           name="info"
           isSucceeded={isSucceeded}
