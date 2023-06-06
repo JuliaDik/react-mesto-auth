@@ -2,7 +2,7 @@
   "name": "mesto_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://JuliaDik.github.io/mesto-react",
+  "homepage": "https://github.com/JuliaDik/react-mesto-auth",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
