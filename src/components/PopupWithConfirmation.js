@@ -9,7 +9,7 @@ function PopupWithConfirmation(props) {
 
   return (
     <PopupWithForm
-      name="card-delete"
+      name="delete"
       title="Вы уверены?"
       buttonText={props.isLoading ? "Удаление..." : "Да"}
       isOpen={props.isOpen}

@@ -9,6 +9,17 @@
   border-bottom: 1px solid rgba(196, 196, 196, 1);
 }
 
+.popup__input:last-of-type {
+  margin: 0 0 23px;
+}
+
+/* 568px */
+@media (max-width: 568px) {
+  .popup__input:last-of-type {
+    margin: 0 0 19px;
+  }
+}
+
 .popup__input::-webkit-input-placeholder {
   color: rgba(196, 196, 196, 1);
 }
