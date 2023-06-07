@@ -6,7 +6,7 @@ import Login from "./Login";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
+import PopupWithConfirmation from "./PopupWithConfirmation";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -26,12 +26,14 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isPopupWithConfirmationOpen, setIsPopupWithConfirmationOpen] = useState(false);
   // пользователь
   const [currentUser, setCurrentUser] = useState({});
   const [currentUserEmail, setCurrentUserEmail] = useState("");
   // карточки
-  const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [cardId, setCardId] = useState(null);
   // меню (мобильная версия)
   const [isMenuMobileOpen, setIsMenuMobileOpen] = useState(false);
   // загрузка
@@ -44,6 +46,7 @@ function App() {
     isEditAvatarPopupOpen ||
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
+    isPopupWithConfirmationOpen ||
     selectedCard;
 
   useEffect(() => {
@@ -174,6 +177,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsPopupWithConfirmationOpen(false);
     setIsInfoTooltipOpen(false);
     setSelectedCard(null);
   }
@@ -241,15 +245,21 @@ function App() {
       });
   }
 
-  function handleCardDelete(card) {
+  function handleConfirmDelete() {
     api
-      .deleteCard(card._id)
+      .deleteCard(cardId)
       .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
+        setCards((cards) => cards.filter((c) => c._id !== cardId));
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
+  }
+
+  function handleCardDeleteClick(cardId) {
+    setCardId(cardId);
+    setIsPopupWithConfirmationOpen(true);
   }
 
   return (
@@ -275,7 +285,7 @@ function App() {
                     onAddPlace={handleAddPlaceClick}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
-                    onCardDelete={handleCardDelete}
+                    onCardDelete={handleCardDeleteClick}
                     cards={cards}
                   />
                   <Footer />
@@ -312,11 +322,11 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
           isLoading={isLoading}
         />
-        <PopupWithForm
-          name="card-delete"
-          title="Вы уверены?"
-          buttonText="Да"
+        <PopupWithConfirmation
+          isOpen={isPopupWithConfirmationOpen}
           onClose={closeAllPopups}
+          onConfirm={handleConfirmDelete}
+          isLoading={isLoading}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
