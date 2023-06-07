@@ -34,6 +34,8 @@ function App() {
   const [cards, setCards] = useState([]);
   // меню (мобильная версия)
   const [isMenuMobileOpen, setIsMenuMobileOpen] = useState(false);
+  // загрузка
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -154,7 +156,11 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
+    setIsLoading(true);
   }
 
   function handleUpdateAvatar({ avatar }) {
@@ -166,7 +172,11 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
+    setIsLoading(true);
   }
 
   function handleAddPlaceSubmit({ name, link }) {
@@ -178,7 +188,11 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
+    setIsLoading(true);
   }
 
   function handleCardLike(card) {
@@ -253,16 +267,19 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoading}
         />
         <PopupWithForm
           name="card-delete"
