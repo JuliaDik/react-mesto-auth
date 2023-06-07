@@ -39,6 +39,36 @@ function App() {
 
   const navigate = useNavigate();
 
+  const isOpen =
+    isInfoTooltipOpen ||
+    isEditAvatarPopupOpen ||
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    selectedCard;
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
+      return () => document.removeEventListener("keydown", closeByEscape);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    function closeByOverlay(evt) {
+      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", closeByOverlay);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     if (isLoggedIn) {
       Promise.all([api.getUserInfo(), api.getCards()])
@@ -287,10 +317,7 @@ function App() {
           buttonText="Да"
           onClose={closeAllPopups}
         />
-        <ImagePopup 
-          card={selectedCard}
-          onClose={closeAllPopups}
-        />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
           name="info"
           isSucceeded={isSucceeded}
