@@ -66,6 +66,7 @@ function App() {
     }
     if (isOpen) {
       document.addEventListener("mousedown", closeByOverlay);
+      return () => document.removeEventListener("mousedown", closeByOverlay);
     }
   }, [isOpen]);
 
