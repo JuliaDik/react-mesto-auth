@@ -5,3 +5,10 @@
   line-height: 17px;
   text-align: center;
 }
+
+/* 568px */
+@media (max-width: 568px) {
+  .authentication__question {
+    margin-top: 20px;
+  }
+}

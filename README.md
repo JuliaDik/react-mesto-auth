@@ -40,5 +40,8 @@ Mesto - сервис для публикации фотографий.
 - Работа с localStorage (хранение токена);
 - Методология БЭМ + файловая структура Nested БЭМ.
 
+## Макет
+[Открыть дизайн-макет в Figma](https://www.figma.com/file/5H3gsn5lIGPwzBPby9jAOo/Sprint-14-RU?node-id=0%3A1)
+
 ## Проект
 [Открыть сайт](https://juliadik.github.io/react-mesto-auth/)

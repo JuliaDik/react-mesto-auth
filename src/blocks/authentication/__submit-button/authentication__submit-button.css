@@ -18,7 +18,7 @@
 
 /* 568px */
 @media (max-width: 568px) {
-  .popup__submit-button {
+  .authentication__submit-button {
     height: 46px;
     font-size: 16px;
     line-height: 19px;

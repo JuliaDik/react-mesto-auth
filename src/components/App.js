@@ -32,6 +32,8 @@ function App() {
   // карточки
   const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
+  // меню (мобильная версия)
+  const [isMenuMobileOpen, setIsMenuMobileOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -112,6 +114,11 @@ function App() {
     setIsLoggedIn(false);
     // перенаправляем на авторизацию (вход в систему)
     navigate("/sign-in", { replace: true });
+    handleMenuMobileOpen();
+  }
+
+  function handleMenuMobileOpen() {
+    setIsMenuMobileOpen(!isMenuMobileOpen);
   }
 
   function handleEditAvatarClick() {
@@ -206,6 +213,9 @@ function App() {
         <Header
           currentUserEmail={currentUserEmail}
           onLogout={handleLogout}
+          loggedIn={isLoggedIn}
+          isOpen={isMenuMobileOpen}
+          onMenuClick={handleMenuMobileOpen}
         />
         <Routes>
           <Route

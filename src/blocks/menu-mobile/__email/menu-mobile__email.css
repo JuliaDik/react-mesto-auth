@@ -1,6 +1,6 @@
-.header__email {
-  display: block;
-  margin: 0 24px 0 0;
+.menu-mobile__email {
+  display: none;
+  margin: 0 0 18px 0;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
@@ -9,7 +9,7 @@
 
 /* 568px */
 @media (max-width: 568px) {
-  .header__email {
-    display: none;
+  .menu-mobile__email {
+    display: block;
   }
 }
