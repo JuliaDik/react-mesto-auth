@@ -1,23 +1,15 @@
-import { useState } from "react";
+import useForm from "../hooks/useForm";
 
 function Login(props) {
-  const [formValue, setFormValue] = useState({
+  const {values, handleChange, reset} = useForm({
     email: "",
-    password: "",
+    password: ""
   });
-
-  function handleChange(evt) {
-    const { name, value } = evt.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onLogin(formValue.email, formValue.password);
+    props.onLogin(values.email, values.password);
+    reset();
   }
 
   return (
@@ -35,7 +27,7 @@ function Login(props) {
           name="email"
           id="email-input"
           placeholder="Email"
-          value={formValue.email}
+          value={values.email}
           onChange={handleChange}
         ></input>
         <input
@@ -44,7 +36,7 @@ function Login(props) {
           name="password"
           id="password-input"
           placeholder="Пароль"
-          value={formValue.password}
+          value={values.password}
           onChange={handleChange}
         ></input>
         <button

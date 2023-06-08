@@ -182,7 +182,7 @@ function App() {
     setSelectedCard(null);
   }
 
-  function handleUpdateUser({ name, about }) {
+  function handleUpdateUser(name, about) {
     api
       .patchUserInfo({ name, about })
       .then((userData) => {
@@ -198,7 +198,7 @@ function App() {
     setIsLoading(true);
   }
 
-  function handleUpdateAvatar({ avatar }) {
+  function handleUpdateAvatar(avatar) {
     api
       .patchAvatar({ avatar })
       .then((userData) => {
@@ -214,7 +214,7 @@ function App() {
     setIsLoading(true);
   }
 
-  function handleAddPlaceSubmit({ name, link }) {
+  function handleAddPlaceSubmit(name, link) {
     api
       .postCard({ name, link })
       .then((newCard) => {

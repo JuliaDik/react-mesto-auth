@@ -1,24 +1,16 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import useForm from "../hooks/useForm";
 
 function Register(props) {
-  const [formValue, setFormValue] = useState({
+  const {values, handleChange, reset} = useForm({
     email: "",
     password: ""
   });
 
-  function handleChange(evt) {
-    const {name, value} = evt.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
-
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onRegister(formValue.email, formValue.password);
+    props.onRegister(values.email, values.password);
+    reset();
   }
 
   return (
@@ -36,7 +28,7 @@ function Register(props) {
           name="email"
           id="email-input"
           placeholder="Email"
-          value={formValue.email}
+          value={values.email}
           onChange={handleChange}
         ></input>
         <input
@@ -45,7 +37,7 @@ function Register(props) {
           name="password"
           id="password-input"
           placeholder="Пароль"
-          value={formValue.password}
+          value={values.password}
           onChange={handleChange}
         ></input>
         <button
