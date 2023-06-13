@@ -1,26 +1,31 @@
-import React from "react";
+import { useEffect, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import useForm from "../hooks/useForm";
+import useFormAndValidation from "../hooks/useFormAndValidation";
 
 function EditProfilePopup(props) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
-  const {values, handleChange, setValues} = useForm({
-    name: "",
-    about: ""
-  });
-
-  React.useEffect(() => {
-    setValues({
-      name: currentUser.name,
-      about: currentUser.about,
+  const { values, errors, isValid, handleChange, setValues } =
+    useFormAndValidation({
+      name: "",
+      about: "",
     });
+
+  useEffect(() => {
+    if (currentUser.name && currentUser.about) {
+      setValues({
+        name: currentUser.name,
+        about: currentUser.about,
+      });
+    }
   }, [currentUser, props.isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onUpdateUser(values.name, values.about);
+    if (isValid) {
+      props.onUpdateUser(values.name, values.about);
+    }
   }
 
   return (
@@ -31,9 +36,10 @@ function EditProfilePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <input
-        className="popup__input popup__input_type_name"
+        className={`popup__input ${errors.name && "popup__input_type_error"}`}
         type="text"
         id="name-input"
         name="name"
@@ -44,9 +50,9 @@ function EditProfilePopup(props) {
         value={values.name || ""}
         onChange={handleChange}
       />
-      <span className="popup__error name-input-error"></span>
+      <span className={`popup__error ${errors.name && "popup__error_visible"}`}>{errors.name}</span>
       <input
-        className="popup__input popup__input_type_about"
+        className={`popup__input ${errors.about && "popup__input_type_error"}`}
         type="text"
         id="about-input"
         name="about"
@@ -57,7 +63,7 @@ function EditProfilePopup(props) {
         value={values.about || ""}
         onChange={handleChange}
       />
-      <span className="popup__error about-input-error"></span>
+      <span className={`popup__error ${errors.about && "popup__error_visible"}`}>{errors.about}</span>
     </PopupWithForm>
   );
 }

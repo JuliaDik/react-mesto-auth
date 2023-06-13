@@ -1,21 +1,26 @@
-import {useEffect} from "react";
-import useForm from "../hooks/useForm";
+import { useEffect } from "react";
+import useFormAndValidation from "../hooks/useFormAndValidation";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
-  const {values, handleChange, reset} = useForm({
-    name: "",
-    link: ""
-  });
+  const { values, errors, isValid, handleChange, resetForm } =
+    useFormAndValidation({
+      name: "",
+      link: "",
+    });
 
   useEffect(() => {
-    reset();
+    if (!props.isOpen) {
+      resetForm();
+    }
   }, [props.isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onAddPlace(values.name, values.link);
-}
+    if (isValid) {
+      props.onAddPlace(values.name, values.link);
+    }
+  }
 
   return (
     <PopupWithForm
@@ -25,9 +30,10 @@ function AddPlacePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <input
-        className="popup__input popup__input_type_title"
+        className={`popup__input ${errors.name && "popup__input_type_error"}`}
         type="text"
         id="title-input"
         name="name"
@@ -35,21 +41,25 @@ function AddPlacePopup(props) {
         minLength="2"
         maxLength="30"
         required
-        value={values.name}
+        value={values.name || ""}
         onChange={handleChange}
       />
-      <span className="popup__error title-input-error"></span>
+      <span className={`popup__error ${errors.name && "popup__error_visible"}`}>
+        {errors.name}
+      </span>
       <input
-        className="popup__input popup__input_type_link"
+        className={`popup__input ${errors.link && "popup__input_type_error"}`}
         type="url"
         id="link-input"
         name="link"
         placeholder="Ссылка на картинку"
         required
-        value={values.link}
+        value={values.link || ""}
         onChange={handleChange}
       />
-      <span className="popup__error link-input-error"></span>
+      <span className={`popup__error ${errors.link && "popup__error_visible"}`}>
+        {errors.link}
+      </span>
     </PopupWithForm>
   );
 }
