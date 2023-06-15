@@ -55,6 +55,7 @@
 @import url(./blocks/popup/__image-container/popup__image-container.css);
 @import url(./blocks/popup/__image/popup__image.css);
 @import url(./blocks/popup/__caption/popup__caption.css);
+@import url(./blocks/popup/__info-container/popup__info-container.css);
 @import url(./blocks/popup/__info-image/popup__info-image.css);
 @import url(./blocks/popup/__message/popup__message.css);
 /* authentication */
