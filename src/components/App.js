@@ -41,38 +41,6 @@ function App() {
 
   const navigate = useNavigate();
 
-  const isOpen =
-    isInfoTooltipOpen ||
-    isEditAvatarPopupOpen ||
-    isEditProfilePopupOpen ||
-    isAddPlacePopupOpen ||
-    isPopupWithConfirmationOpen ||
-    selectedCard;
-
-  useEffect(() => {
-    function closeByEscape(evt) {
-      if (evt.key === "Escape") {
-        closeAllPopups();
-      }
-    }
-    if (isOpen) {
-      document.addEventListener("keydown", closeByEscape);
-      return () => document.removeEventListener("keydown", closeByEscape);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    function closeByOverlay(evt) {
-      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
-        closeAllPopups();
-      }
-    }
-    if (isOpen) {
-      document.addEventListener("mousedown", closeByOverlay);
-      return () => document.removeEventListener("mousedown", closeByOverlay);
-    }
-  }, [isOpen]);
-
   useEffect(() => {
     if (isLoggedIn) {
       Promise.all([api.getUserInfo(), api.getCards()])
@@ -328,7 +296,11 @@ function App() {
           onConfirm={handleConfirmDelete}
           isLoading={isLoading}
         />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup
+          name="image"
+          card={selectedCard}
+          onClose={closeAllPopups}
+        />
         <InfoTooltip
           name="info"
           isSucceeded={isSucceeded}

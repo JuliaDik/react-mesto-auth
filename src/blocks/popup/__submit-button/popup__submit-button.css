@@ -4,7 +4,7 @@
   padding: 0;
   font-weight: 400;
   font-size: 18px;
-  line-height: 1.2;
+  line-height: 21.78px;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(0, 0, 0, 1);
   border: none;
@@ -18,5 +18,10 @@
   .popup__submit-button {
     height: 46px;
     font-size: 14px;
+    line-height: 16.94px;
   }
+}
+
+.popup__submit-button:hover {
+  opacity: 0.8;
 }

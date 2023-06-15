@@ -1,40 +1,34 @@
+import Popup from "./Popup";
+
 function PopupWithForm(props) {
   return (
-    <div
-      className={`popup popup_type_${props.name} ${
-        props.isOpen && "popup_opened"
-      }`}
+    <Popup
+      name={props.name}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
     >
-      <div className="popup__container">
+      <form
+        className="popup__form"
+        name={props.name}
+        onSubmit={props.onSubmit}
+        noValidate
+      >
+        <h3 className={`popup__title popup__title_type_${props.name}`}>
+          {props.title}
+        </h3>
+        {props.children}
         <button
-          className="popup__close-button"
-          type="button"
-          aria-label="кнопка-закрыть"
-          onClick={props.onClose}
-        ></button>
-        <form
-          className="popup__form"
-          name={props.name}
-          onSubmit={props.onSubmit}
-          noValidate
+          className={`popup__submit-button ${
+            !props.isValid && "popup__submit-button_disabled"
+          }`}
+          type="submit"
+          aria-label="кнопка-сохранить"
+          disabled={!props.isValid}
         >
-          <h3 className={`popup__title popup__title_type_${props.name}`}>
-            {props.title}
-          </h3>
-          {props.children}
-          <button
-            className={`popup__submit-button ${
-              !props.isValid && "popup__submit-button_disabled"
-            }`}
-            type="submit"
-            aria-label="кнопка-сохранить"
-            disabled={!props.isValid}
-          >
-            {props.buttonText}
-          </button>
-        </form>
-      </div>
-    </div>
+          {props.buttonText}
+        </button>
+      </form>
+    </Popup>
   );
 }
 

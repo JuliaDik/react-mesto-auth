@@ -1,15 +1,9 @@
 .popup__error {
-  min-height: 24px;
+  padding: 5px 0 0;
+  min-height: 29px;
   font-weight: 400;
   font-size: 12px;
-  line-height: 1;
+  line-height: 14.52px;
   color: rgba(255, 0, 0, 1);
   visibility: hidden;
-}
-
-/* 568px */
-@media (max-width: 568px) {
-  .popup__error:last-of-type {
-    margin-bottom: 16px;
-  }
 }

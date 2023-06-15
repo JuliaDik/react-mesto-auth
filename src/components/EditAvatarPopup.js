@@ -31,21 +31,23 @@ function EditAvatarPopup(props) {
       onSubmit={handleSubmit}
       isValid={isValid}
     >
-      <input
-        className={`popup__input ${errors.avatar && "popup__input_type_error"}`}
-        type="url"
-        id="avatar-input"
-        name="avatar"
-        placeholder="Ссылка на картинку"
-        required
-        value={values.avatar || ""}
-        onChange={handleChange}
-      />
-      <span
-        className={`popup__error ${errors.avatar && "popup__error_visible"}`}
-      >
-        {errors.avatar}
-      </span>
+      <div className="popup__input-container">
+        <input
+          className={`popup__input ${errors.avatar && "popup__input_type_error"}`}
+          type="url"
+          id="avatar-input"
+          name="avatar"
+          placeholder="Ссылка на картинку"
+          required
+          value={values.avatar || ""}
+          onChange={handleChange}
+        />
+        <span
+          className={`popup__error ${errors.avatar && "popup__error_visible"}`}
+        >
+          {errors.avatar}
+        </span>
+      </div>
     </PopupWithForm>
   );
 }

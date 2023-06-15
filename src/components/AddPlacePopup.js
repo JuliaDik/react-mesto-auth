@@ -32,34 +32,36 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
       isValid={isValid}
     >
-      <input
-        className={`popup__input ${errors.name && "popup__input_type_error"}`}
-        type="text"
-        id="title-input"
-        name="name"
-        placeholder="Название"
-        minLength="2"
-        maxLength="30"
-        required
-        value={values.name || ""}
-        onChange={handleChange}
-      />
-      <span className={`popup__error ${errors.name && "popup__error_visible"}`}>
-        {errors.name}
-      </span>
-      <input
-        className={`popup__input ${errors.link && "popup__input_type_error"}`}
-        type="url"
-        id="link-input"
-        name="link"
-        placeholder="Ссылка на картинку"
-        required
-        value={values.link || ""}
-        onChange={handleChange}
-      />
-      <span className={`popup__error ${errors.link && "popup__error_visible"}`}>
-        {errors.link}
-      </span>
+      <div className="popup__input-container">
+        <input
+          className={`popup__input ${errors.name && "popup__input_type_error"}`}
+          type="text"
+          id="title-input"
+          name="name"
+          placeholder="Название"
+          minLength="2"
+          maxLength="30"
+          required
+          value={values.name || ""}
+          onChange={handleChange}
+        />
+        <span className={`popup__error ${errors.name && "popup__error_visible"}`}>
+          {errors.name}
+        </span>
+        <input
+          className={`popup__input ${errors.link && "popup__input_type_error"}`}
+          type="url"
+          id="link-input"
+          name="link"
+          placeholder="Ссылка на картинку"
+          required
+          value={values.link || ""}
+          onChange={handleChange}
+        />
+        <span className={`popup__error ${errors.link && "popup__error_visible"}`}>
+          {errors.link}
+        </span>
+      </div>
     </PopupWithForm>
   );
 }
