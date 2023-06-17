@@ -1,20 +1,14 @@
 import Popup from "./Popup";
 
-function ImagePopup(props) {
+function ImagePopup({ card, onClose, type }) {
   return (
-    <Popup
-      name={props.name}
-      isOpen={props.card}
-      onClose={props.onClose}
-    >
+    <Popup isOpen={card} onClose={onClose} type={type}>
       <img
         className="popup__image"
-        src={props.card ? props.card.link : "#"}
-        alt={props.card ? props.card.name : "#"}
+        src={card ? card.link : "#"}
+        alt={card ? card.name : "#"}
       />
-      <p className="popup__caption">
-        {props.card ? props.card.name : ""}
-      </p>
+      <p className="popup__caption">{card ? card.name : ""}</p>
     </Popup>
   );
 }

@@ -2,21 +2,17 @@ import Popup from "./Popup";
 import successIcon from "../images/succes-icon.svg";
 import failIcon from "../images/fail-icon.svg";
 
-function InfoTooltip(props) {
+function InfoTooltip({ isOpen, onClose, isSucceeded }) {
   return (
-    <Popup
-      name={props.name}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-    >
+    <Popup isOpen={isOpen} onClose={onClose}>
       <div className="popup__info-container">
         <img
           className="popup__info-image"
-          src={props.isSucceeded ? successIcon : failIcon}
-          alt={props.isSucceeded ? "Успешно" : "Ошибка"}
+          src={isSucceeded ? successIcon : failIcon}
+          alt={isSucceeded ? "Успешно" : "Ошибка"}
         />
-        <p className="popup__message">
-          {props.isSucceeded
+        <p className="popup__info-message">
+          {isSucceeded
             ? "Вы успешно зарегистрировались!"
             : "Что-то пошло не так! Попробуйте еще раз."}
         </p>

@@ -1,27 +1,14 @@
 .authentication__input {
-  margin-bottom: 30px;
-  padding: 6px 0;
+  padding: 6px 0 6px;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color:rgb(255, 255, 255, 1);
+  color: rgb(255, 255, 255, 1);
   border: none;
   border-bottom: 2px solid rgba(204, 204, 204, 1);
   background-color: transparent;
 }
 
-.authentication__input:last-of-type {
-  margin-bottom: 216px;
-}
-
-/* 568px */
-@media (max-width: 568px) {
-  .authentication__input:last-of-type {
-    margin-bottom: 173px;
-  }
-}
-
 .authentication__input::placeholder {
   color: rgba(204, 204, 204, 1);
 }
-

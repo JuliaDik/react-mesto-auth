@@ -5,15 +5,11 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  background-color: rgba(255, 255, 255, 1);
   border: none;
   border-radius: 2px;
-  cursor: pointer;
+  background-color: rgba(255, 255, 255, 1);
   transition: opacity 0.2s;
-}
-
-.authentication__submit-button:hover {
-  opacity: 0.85;
+  cursor: pointer;
 }
 
 /* 568px */
@@ -23,4 +19,8 @@
     font-size: 16px;
     line-height: 19px;
   }
+}
+
+.authentication__submit-button:hover {
+  opacity: 0.85;
 }

@@ -1,23 +1,29 @@
 import PopupWithForm from "./PopupWithForm";
-import useFormAndValidation from "../hooks/useFormAndValidation";
 
-function PopupWithConfirmation(props) {
+function PopupWithConfirmation({
+  type,
+  card,
+  isOpen,
+  onClose,
+  onConfirm,
+  isLoading,
+}) {
   function handleSubmit(evt) {
     evt.preventDefault();
-    props.onConfirm(props.card);
+    onConfirm(card);
   }
 
   return (
     <PopupWithForm
-      name="delete"
+      type={type}
+      isOpen={isOpen}
+      onClose={onClose}
+      name="card-delete"
       title="Вы уверены?"
-      buttonText={props.isLoading ? "Удаление..." : "Да"}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onSubmit={handleSubmit}
       isValid={true}
-    >
-    </PopupWithForm>
+      buttonText={isLoading ? "Удаление..." : "Да"}
+      onSubmit={handleSubmit}
+    ></PopupWithForm>
   );
 }
 

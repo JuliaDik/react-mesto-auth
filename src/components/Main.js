@@ -2,7 +2,15 @@ import React from "react";
 import Card from "./Card.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main(props) {
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  cards,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -14,10 +22,7 @@ function Main(props) {
             src={currentUser.avatar}
             alt="Аватар пользователя"
           />
-          <div
-            className="profile__avatar-edit"
-            onClick={props.onEditAvatar}
-          ></div>
+          <div className="profile__avatar-edit" onClick={onEditAvatar}></div>
         </div>
         <div className="profile__info">
           <h1 className="profile__name">{currentUser.name}</h1>
@@ -26,7 +31,7 @@ function Main(props) {
             type="button"
             aria-label="кнопка-редактировать"
             title="Редактировать"
-            onClick={props.onEditProfile}
+            onClick={onEditProfile}
           ></button>
           <p className="profile__about">{currentUser.about}</p>
         </div>
@@ -35,18 +40,18 @@ function Main(props) {
           type="button"
           aria-label="кнопка-добавить"
           title="Добавить карточку"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
       <section className="gallery" aria-label="карточки с фотографиями">
         <ul className="cards-container">
-          {props.cards.map((card) => (
+          {cards.map((card) => (
             <Card
               card={card}
               key={card._id}
-              onCardClick={props.onCardClick}
-              onCardLike={props.onCardLike}
-              onCardDelete={props.onCardDelete}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>

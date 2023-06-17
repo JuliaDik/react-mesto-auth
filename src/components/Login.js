@@ -1,14 +1,13 @@
 import AuthForm from "./AuthForm";
 
-function Login(props) {
+function Login({ onLogin }) {
   return (
     <div className="authentication">
       <AuthForm
         name="login"
         title="Вход"
         buttonText="Войти"
-        isOpen={props.props}
-        onAuthClick={props.onLogin}
+        onSubmitClick={onLogin}
       />
     </div>
   );

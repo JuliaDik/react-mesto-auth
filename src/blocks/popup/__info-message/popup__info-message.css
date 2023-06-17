@@ -1,4 +1,4 @@
-.popup__message {
+.popup__info-message {
   margin: 0;
   font-weight: 900;
   font-size: 24px;
@@ -8,7 +8,7 @@
 
 /* 568px */
 @media (max-width: 568px) {
-  .popup__message {
+  .popup__info-message {
     font-size: 20px;
     line-height: 24px;
   }

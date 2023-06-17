@@ -1,18 +1,16 @@
-import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.svg";
 import MobileMenu from "./MobileMenu";
 import menuButton from "../images/menu-icon.svg";
 import closeButton from "../images/close-button.svg";
 
-function Header(props) {
+function Header({ loggedIn, onLogout, currentUserEmail, isOpen, onMenuClick }) {
   return (
     <>
       <MobileMenu
-        currentUserEmail={props.currentUserEmail}
-        loggedIn={props.isLoggedIn}
-        onLogout={props.onLogout}
-        isOpen={props.isOpen}
+        currentUserEmail={currentUserEmail}
+        onLogout={onLogout}
+        isOpen={isOpen}
       />
       <header className="header">
         <img className="header__logo" src={logo} alt="Логотип Mesto" />
@@ -22,10 +20,10 @@ function Header(props) {
             path="/"
             element={
               <>
-                <p className="header__email">{props.currentUserEmail}</p>
+                <p className="header__email">{currentUserEmail}</p>
                 <Link
                   className="header__link header__link_type_exit"
-                  onClick={props.onLogout}
+                  onClick={onLogout}
                 >
                   Выйти
                 </Link>
@@ -54,10 +52,12 @@ function Header(props) {
         <div
           className="header__menu-button"
           style={{
-            backgroundImage: props.isOpen ? `url(${closeButton})` : `url(${menuButton})`,
-            display: !props.loggedIn ? "none" : "block",
+            backgroundImage: isOpen
+              ? `url(${closeButton})`
+              : `url(${menuButton})`,
+            display: !loggedIn ? "none" : "block",
           }}
-          onClick={props.onMenuClick}
+          onClick={onMenuClick}
         ></div>
       </header>
     </>

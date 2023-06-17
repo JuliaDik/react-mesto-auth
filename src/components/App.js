@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import api from "../utils/Api";
+import auth from "../utils/Auth";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
 import Login from "./Login";
@@ -12,9 +15,6 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
-import api from "../utils/Api";
-import auth from "../utils/Auth";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   // аутентификация
@@ -26,7 +26,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isPopupWithConfirmationOpen, setIsPopupWithConfirmationOpen] = useState(false);
+  const [isPopupWithConfirmationOpen, setIsPopupWithConfirmationOpen] =
+    useState(false);
   // пользователь
   const [currentUser, setCurrentUser] = useState({});
   const [currentUserEmail, setCurrentUserEmail] = useState("");
@@ -234,9 +235,9 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Header
-          currentUserEmail={currentUserEmail}
-          onLogout={handleLogout}
           loggedIn={isLoggedIn}
+          onLogout={handleLogout}
+          currentUserEmail={currentUserEmail}
           isOpen={isMenuMobileOpen}
           onMenuClick={handleMenuMobileOpen}
         />
@@ -291,21 +292,22 @@ function App() {
           isLoading={isLoading}
         />
         <PopupWithConfirmation
+          type="delete"
+          card={selectedCard}
           isOpen={isPopupWithConfirmationOpen}
           onClose={closeAllPopups}
           onConfirm={handleConfirmDelete}
           isLoading={isLoading}
         />
         <ImagePopup
-          name="image"
+          type="image"
           card={selectedCard}
           onClose={closeAllPopups}
         />
         <InfoTooltip
-          name="info"
-          isSucceeded={isSucceeded}
           isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
+          isSucceeded={isSucceeded}
         />
       </CurrentUserContext.Provider>
     </div>

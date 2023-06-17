@@ -1,33 +1,30 @@
 import Popup from "./Popup";
+import Form from "./Form";
 
-function PopupWithForm(props) {
+function PopupWithForm({
+  type,
+  isOpen,
+  onClose,
+  name,
+  title,
+  isValid,
+  buttonText,
+  onSubmit,
+  children,
+}) {
   return (
-    <Popup
-      name={props.name}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-    >
-      <form
-        className="popup__form"
-        name={props.name}
-        onSubmit={props.onSubmit}
-        noValidate
+    <Popup type={type} isOpen={isOpen} onClose={onClose}>
+      <Form
+        name={name}
+        title={title}
+        isValid={isValid}
+        buttonText={buttonText}
+        onSubmit={onSubmit}
+        location="popup"
+        type={type}
       >
-        <h3 className={`popup__title popup__title_type_${props.name}`}>
-          {props.title}
-        </h3>
-        {props.children}
-        <button
-          className={`popup__submit-button ${
-            !props.isValid && "popup__submit-button_disabled"
-          }`}
-          type="submit"
-          aria-label="кнопка-сохранить"
-          disabled={!props.isValid}
-        >
-          {props.buttonText}
-        </button>
-      </form>
+        {children}
+      </Form>
     </Popup>
   );
 }

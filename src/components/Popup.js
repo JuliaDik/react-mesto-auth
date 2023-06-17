@@ -1,39 +1,39 @@
 import { useEffect } from "react";
 
-function Popup(props) {
+function Popup({ isOpen, onClose, type, children }) {
   // закрытие Escape
   useEffect(() => {
     function closeByEscape(evt) {
       if (evt.key === "Escape") {
-        props.onClose();
+        onClose();
       }
     }
     // обработчик висит только при открытом попапе
-    if (props.isOpen) {
+    if (isOpen) {
       document.addEventListener("keydown", closeByEscape);
       return () => document.removeEventListener("keydown", closeByEscape);
     }
-  }, [props.isOpen, props.onClose]);
+  }, [isOpen, onClose]);
 
   // закрытие overlay
   const handleOverlay = (evt) => {
     if (evt.target === evt.currentTarget) {
-      props.onClose();
+      onClose();
     }
   };
 
   return (
     <div
-      className={`popup ${props.isOpen && "popup_opened"} popup_type_${props.name}`}
+      className={`popup ${isOpen && "popup_opened"} popup_type_${type}`}
       onClick={handleOverlay}
     >
       <div className="popup__container">
-        {props.children}
+        {children}
         <button
           className="popup__close-button"
           type="button"
           aria-label="кнопка-закрыть"
-          onClick={props.onClose}
+          onClick={onClose}
         />
       </div>
     </div>
