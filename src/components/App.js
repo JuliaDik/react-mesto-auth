@@ -243,7 +243,6 @@ function App() {
         />
         <Routes>
           <Route
-            exact
             path="/"
             element={
               <ProtectedRoute loggedIn={isLoggedIn}>
@@ -263,12 +262,10 @@ function App() {
             }
           />
           <Route
-            exact
             path="/sign-up"
             element={<Register onRegister={handleRegister} />}
           />
           <Route
-            exact
             path="/sign-in"
             element={<Login onLogin={handleLogin} />}
           />

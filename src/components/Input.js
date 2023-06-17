@@ -21,6 +21,7 @@ function Input({
         onChange={handleChange}
         minLength={minLength}
         maxLength={maxLength}
+        autoComplete="on"
         placeholder={placeholder}
         required
       />
