@@ -64,8 +64,8 @@ function App() {
           if (res) {
             // при повторном визите на сайт
             // пользователь не должен вновь авторизовываться
-            setIsLoggedIn(true);
             setCurrentUserEmail(res.data.email);
+            setIsLoggedIn(true);
             // сразу перенаправляется в пользовательский профиль
             navigate("/", { replace: true });
           }
