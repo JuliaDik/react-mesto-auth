@@ -81,15 +81,15 @@ function App() {
       .register(email, password)
       .then((res) => {
         if (res) {
-          setIsInfoTooltipOpen(true);
           setIsSucceeded(true);
+          setIsInfoTooltipOpen(true);
           // перенаправляем на авторизацию (вход в систему)
           navigate("/sign-in", { replace: true });
         }
       })
       .catch((err) => {
-        setIsInfoTooltipOpen(true);
         setIsSucceeded(false);
+        setIsInfoTooltipOpen(true);
         console.log(`Ошибка: ${err}`);
       });
   }
@@ -107,8 +107,8 @@ function App() {
         }
       })
       .catch((err) => {
-        setIsInfoTooltipOpen(true);
         setIsSucceeded(false);
+        setIsInfoTooltipOpen(true);
         console.log(`Ошибка: ${err}`);
       });
   }
