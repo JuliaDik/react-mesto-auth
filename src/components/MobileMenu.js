@@ -1,13 +1,13 @@
 import { Routes, Route, Link } from "react-router-dom";
 
 function MobileMenu({ currentUserEmail, onLogout, isOpen }) {
+
   return (
     <Routes>
       <Route
-        exact
         path="/"
         element={
-          <div className={`menu-mobile ${isOpen && "menu-mobile_opened"}`}>
+          <div className={`menu-mobile ${isOpen && "menu-mobile_opened"} appearance`}>
             <p className="menu-mobile__email">{currentUserEmail}</p>
             <Link className="menu-mobile__link" onClick={onLogout}>
               Выйти

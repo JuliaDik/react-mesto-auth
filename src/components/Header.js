@@ -1,8 +1,8 @@
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.svg";
-import MobileMenu from "./MobileMenu";
 import menuButton from "../images/menu-icon.svg";
 import closeButton from "../images/close-button.svg";
+import MobileMenu from "./MobileMenu";
 
 function Header({ loggedIn, onLogout, currentUserEmail, isOpen, onMenuClick }) {
   return (
@@ -13,10 +13,9 @@ function Header({ loggedIn, onLogout, currentUserEmail, isOpen, onMenuClick }) {
         isOpen={isOpen}
       />
       <header className="header">
-        <img className="header__logo" src={logo} alt="Логотип Mesto" />
+        <img className="header__logo" src={logo} alt="Логотип Mesto"/>
         <Routes>
           <Route
-            exact
             path="/"
             element={
               <>
@@ -31,7 +30,6 @@ function Header({ loggedIn, onLogout, currentUserEmail, isOpen, onMenuClick }) {
             }
           />
           <Route
-            exact
             path="/sign-in"
             element={
               <Link className="header__link" to="/sign-up">
@@ -40,7 +38,6 @@ function Header({ loggedIn, onLogout, currentUserEmail, isOpen, onMenuClick }) {
             }
           />
           <Route
-            exact
             path="/sign-up"
             element={
               <Link className="header__link" to="/sign-in">
